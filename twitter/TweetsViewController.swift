@@ -32,6 +32,12 @@ class TweetsViewController: UIViewController {
     }
     
 
+    @IBAction func onLogoutButton(sender: AnyObject) {
+        User.currentUser = nil
+        TwitterClient.sharedInstance.logout()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("UserDidLogout", object: nil)
+    }
     /*
     // MARK: - Navigation
 
