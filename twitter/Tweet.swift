@@ -14,8 +14,12 @@ class Tweet: NSObject {
     var timeStamp: NSDate?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
-    
+    var profileName: String?
+    var profileImageUrl: String?
     init(dictionary: NSDictionary){
+        let userInfo = dictionary["user"] as! NSDictionary
+        profileName = userInfo["name"] as? String
+        profileImageUrl = userInfo["profile_image_url_https"] as? String
         
         text = dictionary["text"] as? String
         

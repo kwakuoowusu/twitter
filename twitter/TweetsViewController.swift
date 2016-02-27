@@ -8,18 +8,22 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController {
+class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
             for tweet in tweets{
-                print(tweet.text!)
-                //tableview.reloadData
+                self.tableView.reloadData()
             }
+            
             }) { (error:NSError) -> () in
                 print(error.localizedDescription)
         }
@@ -38,6 +42,23 @@ class TweetsViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().postNotificationName("UserDidLogout", object: nil)
     }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
+        
+        cell.tweet = tweets[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tweets != nil{
+            return  tweets.count
+        } else {
+            return 0
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
