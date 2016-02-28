@@ -17,11 +17,19 @@ class Tweet: NSObject {
     var profileName: String?
     var profileImageUrl: String?
     var screenName: String?
+    var liked = false
     var retweeted = false
     var retweeter: String?
+    var tweetId: NSNumber?
+    var storageDict: NSDictionary
     
     init(dictionary: NSDictionary){
+        storageDict = dictionary
+        tweetId = dictionary["id"] as? Int
+        
+        liked = dictionary["favorited"] as! Bool
         retweeted = dictionary["retweeted"] as! Bool
+       
         let userInfo = dictionary["user"] as! NSDictionary
         
         profileName = userInfo["name"] as? String
@@ -47,6 +55,8 @@ class Tweet: NSObject {
             timeStamp = formatter.dateFromString(timeStampString)
             
         }
+        
+        
 
     }
 
@@ -60,5 +70,11 @@ class Tweet: NSObject {
         }
         
         return tweets
+    }
+    
+    class func returnAsDictionary(dictionary: NSDictionary) -> Tweet{
+        let tweet = Tweet(dictionary: dictionary)
+        
+        return tweet
     }
 }

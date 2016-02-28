@@ -20,6 +20,10 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
+
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
         
@@ -28,12 +32,29 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
             }) { (error:NSError) -> () in
                 print(error.localizedDescription)
         }
+        
+        
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        
+        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+            
+            }) { (error:NSError) -> () in
+                print(error.localizedDescription)
+
+        }
     }
     
 
@@ -46,7 +67,8 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
-        
+        cell.selectionStyle = .None
+
         cell.tweet = tweets[indexPath.row]
         
         return cell
@@ -62,8 +84,35 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
     
 
     
-
+    var isMoreDataLoading = false
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if(!isMoreDataLoading){
+            
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                print("scrolling")
+                loadMoreData()
+            }
+        }
+    }
+    
+    func loadMoreData(){
+        TwitterClient.sharedInstance.homeTimeline({ (success:[Tweet]) -> () in
+            
+            for tweet in success{
+                self.tweets.append(tweet)
+                
+            }
+            self.isMoreDataLoading = false
+            self.tableView.reloadData()
+            }) { (error: NSError) -> () in
+                print(error.description)
+        }
+    }
     
     
     /*

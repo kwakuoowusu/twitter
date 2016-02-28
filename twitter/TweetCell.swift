@@ -27,11 +27,19 @@ class TweetCell: UITableViewCell {
 
     @IBOutlet weak var likeButton: UIButton!
     
+    var id: Int?
     var tweet: Tweet!{
         didSet{
             
-            
-        
+            if (tweet.liked){
+                let image = UIImage(named: "like-action-on") as UIImage!
+                likeButton.setImage(image, forState: .Normal)
+            }
+            if(tweet.retweeted){
+                let image = UIImage(named: "retweet-action-on") as UIImage!
+                retweetButton.setImage(image, forState: .Normal)
+            }
+            self.userRetweetLabel.text = ""
             self.tweetLabel.text = tweet.text
             tweetLabel.sizeToFit()
 
@@ -84,9 +92,7 @@ class TweetCell: UITableViewCell {
             
         }
     }
-    @IBAction func onRetweetPressed(sender: AnyObject) {
-        print("hello")
-    }
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         tweetLabel.preferredMaxLayoutWidth = tweetLabel.frame.size.width
@@ -108,6 +114,57 @@ class TweetCell: UITableViewCell {
     }
 
    
+    @IBAction func onRetweetPressed(sender: AnyObject) {
+        
+        if (!tweet.retweeted){
+            let button = sender as! UIButton
+            
+            
+            let image = UIImage(named: "retweet-action-on") as UIImage!
+            TwitterClient.sharedInstance.retweet(["id": tweet.tweetId!], success: { (tweets, error) -> () in
+            
+                if tweets != nil{
+                    self.tweet.retweeted = true
+                    button.setImage(image, forState: .Normal)
+                    self.tweet.retweetCount+=1
+                    self.retweetLabel.text = self.tweet.retweetCount.description
+                }
+                
+            }) { (error: NSError) -> () in
+                print(error.description)
+            }
+        }
+    }
+   
+    @IBAction func onLikePressed(sender: AnyObject) {
+        
+        if (!tweet.liked){
+            let button = sender as! UIButton
+            
+            let image = UIImage(named: "like-action-on") as UIImage!
+            
+            TwitterClient.sharedInstance.like(["id":tweet.tweetId!], success: { (liked, error) -> () in
+                
+                print(liked)
+                if (liked){
+                    self.tweet.liked = true
+                    button.setImage(image, forState: .Normal)
+                    
+                    self.tweet.favoritesCount+=1
+                    self.likeLabel.text = self.tweet.favoritesCount.description
+                }
+                
+                }, failure: { (error: NSError) -> () in
+                    print(error.description)
+            })
+            
+        }
+       
+        
+        
+        
+        
+    }
    
 
     override func setSelected(selected: Bool, animated: Bool) {
