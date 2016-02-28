@@ -30,7 +30,6 @@ class TweetCell: UITableViewCell {
     var tweet: Tweet!{
         didSet{
             
-            self.retweetButton.addTarget(self, action: "onRetweetPressed:", forControlEvents: UIControlEvents.TouchUpInside)
             
         
             self.tweetLabel.text = tweet.text
