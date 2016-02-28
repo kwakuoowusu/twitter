@@ -17,13 +17,14 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
         
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
-            for tweet in tweets{
-                self.tableView.reloadData()
-            }
-            
+        
+            self.tableView.reloadData()
+
             }) { (error:NSError) -> () in
                 print(error.localizedDescription)
         }
@@ -58,6 +59,12 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
             return 0
         }
     }
+    
+
+    
+
+    
+    
     
     /*
     // MARK: - Navigation

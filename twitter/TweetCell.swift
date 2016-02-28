@@ -8,6 +8,8 @@
 
 import UIKit
 import AFNetworking
+import TimeAgoInWords
+
 class TweetCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -21,19 +23,32 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var tweetLabel: UILabel!
     
+    @IBOutlet weak var retweetButton: UIButton!
+
+    @IBOutlet weak var likeButton: UIButton!
+    
     var tweet: Tweet!{
         didSet{
             
+            self.retweetButton.addTarget(self, action: "onRetweetPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+        
             self.tweetLabel.text = tweet.text
             tweetLabel.sizeToFit()
-            
+
             self.profileName.text = tweet.profileName
             self.profileName.sizeToFit()
-            
+
+            self.userName.text = tweet.screenName
+            self.retweetLabel.text = tweet.retweetCount.description
+            retweetLabel.sizeToFit()
+
+            self.likeLabel.text = tweet.favoritesCount.description
+            likeLabel.sizeToFit()
+
             let profileImageString = tweet.profileImageUrl
             
             if (profileImageString != nil){
-                print (profileImageString!)
                 
                 profileImageView.setImageWithURL(NSURL(string:profileImageString!)!)
                 
@@ -41,15 +56,60 @@ class TweetCell: UITableViewCell {
                 self.profileImageView.clipsToBounds = true
 
             }
-            self.timeStampLabel.text = tweet.timeStamp?.description
+            let timeStamp = tweet.timeStamp
+            if let timeStamp = timeStamp{
+                
+                let railsStrings = [
+                    "LessThan": "",
+                    "About": "",
+                    "Over": "",
+                    "Almost": "almost ",
+                    "Seconds": "s",
+                    "Minute": "m",
+                    "Minutes": "m",
+                    "Hour": "h",
+                    "Hours": "h",
+                    "Day": "d",
+                    "Days": "d",
+                    "Months": "m",
+                    "Years": "y",
+                ]
+                TimeAgoInWordsStrings.updateStrings(railsStrings)
+                
+                let timeAgo = timeStamp.timeAgoInWords()
+                timeStampLabel.text = timeAgo
+                
+            }
             self.timeStampLabel.sizeToFit()
+
             
         }
     }
+    @IBAction func onRetweetPressed(sender: AnyObject) {
+        print("hello")
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        tweetLabel.preferredMaxLayoutWidth = tweetLabel.frame.size.width
+        profileName.preferredMaxLayoutWidth = profileName.frame.size.width
+        retweetLabel.preferredMaxLayoutWidth = retweetLabel.frame.size.width
+        likeLabel.preferredMaxLayoutWidth = likeLabel.frame.size.width
+        timeStampLabel.preferredMaxLayoutWidth = timeStampLabel.frame.size.width
+
+        
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tweetLabel.preferredMaxLayoutWidth = tweetLabel.frame.size.width
+        profileName.preferredMaxLayoutWidth = profileName.frame.size.width
+        retweetLabel.preferredMaxLayoutWidth = retweetLabel.frame.size.width
+        likeLabel.preferredMaxLayoutWidth = likeLabel.frame.size.width
+        timeStampLabel.preferredMaxLayoutWidth = timeStampLabel.frame.size.width
+        
+    }
+
+   
+   
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
