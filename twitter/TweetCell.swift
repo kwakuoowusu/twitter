@@ -145,7 +145,6 @@ class TweetCell: UITableViewCell {
             
             TwitterClient.sharedInstance.like(["id":tweet.tweetId!], success: { (liked, error) -> () in
                 
-                print(liked)
                 if (liked){
                     self.tweet.liked = true
                     button.setImage(image, forState: .Normal)

@@ -28,7 +28,6 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
             self.maxId = self.tweets[self.tweets.count-1].tweetId as! Int
-            print (self.maxId)
             self.tableView.reloadData()
 
             }) { (error:NSError) -> () in
