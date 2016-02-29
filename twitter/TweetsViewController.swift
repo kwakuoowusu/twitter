@@ -12,6 +12,7 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
+    var maxId: Int!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +27,8 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
 
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
-        
+            self.maxId = self.tweets[self.tweets.count-1].tweetId as! Int
+            print (self.maxId)
             self.tableView.reloadData()
 
             }) { (error:NSError) -> () in
@@ -94,19 +96,19 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
             
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
                 isMoreDataLoading = true
-                print("scrolling")
                 loadMoreData()
             }
         }
     }
     
     func loadMoreData(){
-        TwitterClient.sharedInstance.homeTimeline({ (success:[Tweet]) -> () in
+        
+        TwitterClient.sharedInstance.getOlderTweets(self.maxId, success: { (success: [Tweet]) -> () in
             
             for tweet in success{
                 self.tweets.append(tweet)
-                
             }
+            
             self.isMoreDataLoading = false
             self.tableView.reloadData()
             }) { (error: NSError) -> () in

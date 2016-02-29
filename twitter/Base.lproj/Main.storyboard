@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -20,6 +21,11 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzh-Ix-8M5">
                                 <rect key="frame" x="56" y="374" width="208" height="80"/>
                                 <color key="backgroundColor" red="0.33333333329999998" green="0.67450980390000004" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mzh-Ix-8M5" secondAttribute="height" multiplier="13:5" id="Hw6-qv-FWJ"/>
+                                    <constraint firstAttribute="width" constant="208" id="he7-OE-6fv"/>
+                                    <constraint firstAttribute="height" constant="80" id="nZE-RG-Knf"/>
+                                </constraints>
                                 <state key="normal" title="Log in with Twitter">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -30,10 +36,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="mzh-Ix-8M5" secondAttribute="trailing" constant="56" id="0R4-V8-0cR"/>
-                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="56" id="1qH-LT-WDU"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mzh-Ix-8M5" secondAttribute="bottom" constant="114" id="Lkz-B7-Xa6"/>
-                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="354" id="pOO-3V-iRd"/>
+                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="56" id="7NE-Vs-pxJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mzh-Ix-8M5" secondAttribute="bottom" constant="114" id="BYR-bd-SmV"/>
+                            <constraint firstAttribute="trailing" secondItem="mzh-Ix-8M5" secondAttribute="trailing" constant="56" id="K81-a0-6nm"/>
+                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="354" id="KD4-g7-5yO"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

@@ -72,6 +72,7 @@ class TwitterClient: BDBOAuth1SessionManager {
                 failure(error)
             })
     }
+    
     func currentAccount(success: (User) -> (), failure: (NSError) -> ()){
         GET("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task:NSURLSessionDataTask, response: AnyObject?) -> Void in
             let userDictionary = response as! NSDictionary
@@ -86,6 +87,17 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
 
+    func getOlderTweets(id: Int, success: ([Tweet])-> (), failure: (NSError) -> ()){
+        
+        GET("1.1/statuses/home_timeline.json?max_id=\(id)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("hello")
+            let dictionaries  = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries)
+            success(tweets)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.description)
+        })
+    }
     func retweet(dictionary: NSDictionary?, success: (tweets:Tweet?, error: NSError?)->(), failure: (NSError)-> ()){
         POST("1.1/statuses/retweet/\(dictionary!["id"] as! Int).json", parameters: dictionary, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
                 print("success")
@@ -107,20 +119,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.description)
     }
-    }
-    /*
-    func favorite(params: NSDictionary?, completion: (retweeted: Bool, error: NSError?) -> ()) {
         
-        POST("1.1/favorites/create.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            
-            
-            completion(retweeted: true, error: nil)
-            
-            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                print("ERROR: \(error)")
-                completion(retweeted: false, error: NSError?), error: error)
-        }
     }
-*/
-
+    
 }
