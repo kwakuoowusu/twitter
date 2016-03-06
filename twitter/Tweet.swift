@@ -16,7 +16,7 @@ class Tweet: NSObject {
     var favoritesCount: Int = 0
     var profileName: String?
     var profileImageUrl: String?
-    var screenName: String?
+    var screenName: String!
     var liked = false
     var retweeted = false
     var retweeter: String?

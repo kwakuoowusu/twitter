@@ -14,6 +14,12 @@ class ReplyViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var characterLabel: UILabel!
     
+    @IBOutlet weak var userNameLabel: UILabel!
+    
+    @IBOutlet weak var screenNameLabel: UILabel!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
     var profileUrl: NSURL!
     var replied = false
     var screenNameReply: String!
@@ -24,7 +30,16 @@ class ReplyViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         
-        
+        TwitterClient.sharedInstance.currentAccount({ (user: User) -> () in
+            
+                self.profileUrl = user.profileUrl
+                self.profileImageView.setImageWithURL(self.profileUrl)
+                self.screenNameLabel.text = "@\(user.screenname!)"
+                self.userNameLabel.text  = user.name as String!
+                
+            }) { (error: NSError) -> () in
+                print(error.description)
+        }
         super.viewDidLoad()
         self.replyField.delegate = self
 
@@ -32,7 +47,6 @@ class ReplyViewController: UIViewController, UITextViewDelegate {
         self.replyField.becomeFirstResponder()
         
         self.characterLabel.text = "\(count - self.replyField.text.characters.count)"
-        print(screenNameReply.characters.count)
         
     }
 

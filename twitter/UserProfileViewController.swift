@@ -10,6 +10,16 @@ import UIKit
 
 class UserProfileViewController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    
+    @IBOutlet weak var totalTweetLabel: UILabel!
+    @IBOutlet weak var totalFollowersLabel: UILabel!
+    @IBOutlet weak var totalFollowingLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

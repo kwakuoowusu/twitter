@@ -133,6 +133,25 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
+        
+        if segue.identifier == "replyFromTweetView" {
+            let button = sender as! UIButton
+            let content = button.superview! as UIView
+            let cell = content.superview as! UITableViewCell
+            
+            if let indexPath = tableView.indexPathForCell(cell) {
+                let replyController = segue.destinationViewController as! ReplyViewController
+                
+                let tweet = tweets[indexPath.row]
+                
+                let screenName = tweet.screenName!
+                replyController.screenNameReply = screenName
+                
+                replyController.id = tweet.tweetId as Int!
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        }
     }
     
     /*
