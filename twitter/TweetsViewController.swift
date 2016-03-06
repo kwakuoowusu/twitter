@@ -37,6 +37,10 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -115,6 +119,21 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         }
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetailSegue" {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPathForCell(cell) {
+                let detailController = segue.destinationViewController as! DetailViewController
+                
+                let tweet = tweets[indexPath.row]
+                
+                detailController.tweet = tweet
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        }
+    }
     
     /*
     // MARK: - Navigation

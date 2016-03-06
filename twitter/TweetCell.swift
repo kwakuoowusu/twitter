@@ -27,7 +27,10 @@ class TweetCell: UITableViewCell {
 
     @IBOutlet weak var likeButton: UIButton!
     
+    
     var id: Int?
+    var retweeted: Bool!
+    var liked: Bool!
     var tweet: Tweet!{
         didSet{
             
@@ -116,7 +119,9 @@ class TweetCell: UITableViewCell {
    
     @IBAction func onRetweetPressed(sender: AnyObject) {
         
-        if (!tweet.retweeted){
+        self.retweeted = tweet.retweeted
+        
+        if (!self.retweeted){
             let button = sender as! UIButton
             
             
@@ -125,6 +130,7 @@ class TweetCell: UITableViewCell {
             
                 if tweets != nil{
                     self.tweet.retweeted = true
+                    self.retweeted = true
                     button.setImage(image, forState: .Normal)
                     self.tweet.retweetCount+=1
                     self.retweetLabel.text = self.tweet.retweetCount.description
@@ -138,19 +144,23 @@ class TweetCell: UITableViewCell {
    
     @IBAction func onLikePressed(sender: AnyObject) {
         
-        if (!tweet.liked){
+        self.liked = tweet.liked
+        
+        if (!self.liked){
             let button = sender as! UIButton
             
             let image = UIImage(named: "like-action-on") as UIImage!
             
-            TwitterClient.sharedInstance.like(["id":tweet.tweetId!], success: { (liked, error) -> () in
+            TwitterClient.sharedInstance.like(["id":tweet.tweetId!], success: { (likeSuccess, error) -> () in
                 
-                if (liked){
+                if (likeSuccess){
                     self.tweet.liked = true
+                    self.liked = true
                     button.setImage(image, forState: .Normal)
                     
                     self.tweet.favoritesCount+=1
                     self.likeLabel.text = self.tweet.favoritesCount.description
+                
                 }
                 
                 }, failure: { (error: NSError) -> () in

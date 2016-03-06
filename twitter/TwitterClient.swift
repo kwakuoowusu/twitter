@@ -14,6 +14,8 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     static let sharedInstance = TwitterClient(baseURL: NSURL(string:"https://api.twitter.com")!, consumerKey: "V8WOqOnQcW5QtzbJsI5GftJM6", consumerSecret: "FJxoGYcI842ruIEBzBGoiYaVGAS0TsDHIZDXnunSXzliSPBsO3")
     
+    var userProfileUrl: NSURL!
+    var userScreenName: String!
     var loginSucess: (() -> ())?
     
     var loginFailure: ((NSError) -> ())?
@@ -48,7 +50,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential!) -> Void in
             
             self.currentAccount({ (user: User) -> () in
-                    User.currentUser = user
+                
                     self.loginSucess?()
 
                 }, failure: { (error:NSError) -> () in
@@ -122,4 +124,21 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func reply(dictionary: NSDictionary?, success: (tweet: Tweet?, error: NSError?) -> ()) {
+        
+        
+        POST("1.1/statuses/update.json?status=\(dictionary!["tweet"]!)&in_reply_to_status_id=\(dictionary!["id"] as! Int).json", parameters: dictionary, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            let tweet = Tweet.returnAsDictionary(response as! NSDictionary)
+            
+            success(tweet: tweet, error: nil)
+            }) { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.description)
+        }
+
+        
+    }
+    
+    func create(){
+        
+    }
 }
