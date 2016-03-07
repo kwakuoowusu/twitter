@@ -75,6 +75,28 @@ class TwitterClient: BDBOAuth1SessionManager {
             })
     }
     
+    func userTimeline(screenName: String, success: ([Tweet]) -> (), failure: (NSError) -> ()){
+        GET("1.1/statuses/user_timeline.json?screen_name=\(screenName)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("hello")
+            let dictionaries  = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries)
+            success(tweets)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure(error)
+        })
+    }
+    
+    func getOlderUserTweets(screenName: String, id: String, success: ([Tweet]) -> (), failure: (NSError) -> ()){
+        GET("1.1/statuses/user_timeline.json?screen_name=\(screenName)&max_id=\(id)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            let dictionaries  = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries)
+            success(tweets)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure(error)
+        })
+    }
+    
     func currentAccount(success: (User) -> (), failure: (NSError) -> ()){
         GET("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task:NSURLSessionDataTask, response: AnyObject?) -> Void in
             let userDictionary = response as! NSDictionary
@@ -124,11 +146,27 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    
+    func tweet(status: String, success: (tweet: Tweet?, error: NSError?) -> ()) {
+        
+        
+        POST("1.1/statuses/update.json?status=\(status)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            let tweet = Tweet.returnAsDictionary(response as! NSDictionary)
+            
+            success(tweet: tweet, error: nil)
+            }) { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.description)
+        }
+        
+        
+    }
     func reply(dictionary: NSDictionary?, success: (tweet: Tweet?, error: NSError?) -> ()) {
         
         
         POST("1.1/statuses/update.json?status=\(dictionary!["tweet"]!)&in_reply_to_status_id=\(dictionary!["id"] as! Int).json", parameters: dictionary, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            let tweet = Tweet.returnAsDictionary(response as! NSDictionary)
+            
+           let tweet = Tweet.returnAsDictionary(response as! NSDictionary)
             
             success(tweet: tweet, error: nil)
             }) { (task: NSURLSessionDataTask?, error: NSError) -> Void in
@@ -138,7 +176,5 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
-    func create(){
-        
-    }
+    
 }

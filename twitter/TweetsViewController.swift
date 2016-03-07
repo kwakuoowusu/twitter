@@ -52,7 +52,7 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
-            
+            self.maxId = self.tweets[self.tweets.count-1].tweetId as! Int
             self.tableView.reloadData()
             refreshControl.endRefreshing()
             
@@ -113,6 +113,8 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
             }
             
             self.isMoreDataLoading = false
+            self.maxId = self.tweets[self.tweets.count-1].tweetId as! Int
+
             self.tableView.reloadData()
             }) { (error: NSError) -> () in
                 print(error.description)
@@ -151,6 +153,11 @@ class TweetsViewController: UIViewController,UITableViewDataSource, UITableViewD
                 
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
+        }
+        
+        if segue.identifier == "showComposeSegue"{
+            
+            
         }
     }
     

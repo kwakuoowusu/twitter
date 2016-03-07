@@ -22,7 +22,11 @@ class Tweet: NSObject {
     var retweeter: String?
     var tweetId: NSNumber?
     var storageDict: NSDictionary
-    
+    var tweetCount: Int = 0
+    var followersCount: Int = 0
+    var followingCount: Int = 0
+    var backgroundImageUrl: String?
+    var userID = 0
     init(dictionary: NSDictionary){
         storageDict = dictionary
         tweetId = dictionary["id"] as? Int
@@ -34,8 +38,18 @@ class Tweet: NSObject {
         
         profileName = userInfo["name"] as? String
         profileImageUrl = userInfo["profile_image_url_https"] as? String
+        backgroundImageUrl = userInfo["profile_background_image_url"] as? String
+        
+        userID = userInfo["id"] as! Int
         screenName = userInfo["screen_name"] as? String
-
+        
+        tweetCount = userInfo["statuses_count"] as! Int
+        
+        followersCount = userInfo["followers_count"] as! Int
+        
+        followingCount = userInfo["friends_count"] as! Int
+        
+       
         if  screenName != nil{
             let at = "@"
             screenName = at + screenName!

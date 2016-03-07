@@ -163,7 +163,22 @@ class DetailViewController: UIViewController {
             
             ReplyController.screenNameReply = self.userName.text!
             ReplyController.id = self.tweet.tweetId as Int!
-            print("hello")
+        }
+        
+        if segue.identifier == "showUserSegue"{
+            let UserProfileController = segue.destinationViewController as! UserProfileViewController
+            
+            UserProfileController.screenName = tweet.screenName!
+            UserProfileController.profileImageUrl = tweet.profileImageUrl!
+            UserProfileController.backgroundImageUrl = tweet.backgroundImageUrl!
+            UserProfileController.followerCount = tweet.followersCount
+            UserProfileController.followingCount = tweet.followingCount
+            UserProfileController.totalTweets = tweet.tweetCount
+            UserProfileController.profileName = tweet.profileName
+            
+            let sanitized =  tweet.screenName!.stringByReplacingOccurrencesOfString("@", withString: "")
+            print(sanitized)
+           
         }
     }
 

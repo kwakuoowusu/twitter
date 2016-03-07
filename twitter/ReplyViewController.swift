@@ -30,6 +30,7 @@ class ReplyViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         
+        self.navigationItem.title = "Reply to \(self.screenNameReply)"
         TwitterClient.sharedInstance.currentAccount({ (user: User) -> () in
             
                 self.profileUrl = user.profileUrl
@@ -64,8 +65,7 @@ class ReplyViewController: UIViewController, UITextViewDelegate {
         TwitterClient.sharedInstance.reply(["tweet": percentAddr!, "id": self.id]) { (tweet, error) -> () in
             print("Tweeted")
             
-           
-
+            self.navigationController?.popViewControllerAnimated(true)
             }
         }
     }
