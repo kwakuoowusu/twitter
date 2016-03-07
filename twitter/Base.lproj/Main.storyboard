@@ -17,13 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Twittah" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veY-Q8-Cg9">
-                                <rect key="frame" x="124" y="101" width="73" height="26"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.67450980390000004" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzh-Ix-8M5">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzh-Ix-8M5">
                                 <rect key="frame" x="56" y="328" width="208" height="80"/>
                                 <color key="backgroundColor" red="0.33333333329999998" green="0.67450980390000004" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Log in with Twitter">
@@ -33,8 +27,34 @@
                                     <action selector="onLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LuG-Td-nrO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twittah" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veY-Q8-Cg9">
+                                <rect key="frame" x="124" y="101" width="73" height="26"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
+                                <color key="textColor" red="0.33333333329999998" green="0.67450980390000004" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Twitter_logo_blue_48" translatesAutoresizingMaskIntoConstraints="NO" id="mq9-gf-DXb">
+                                <rect key="frame" x="136" y="205" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="XVt-dW-8Dw"/>
+                                    <constraint firstAttribute="height" constant="48" id="teC-lT-iS7"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mq9-gf-DXb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="136" id="Hfy-Kv-aAt"/>
+                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="56" id="O9X-Mr-wgc"/>
+                            <constraint firstItem="mq9-gf-DXb" firstAttribute="top" secondItem="veY-Q8-Cg9" secondAttribute="bottom" constant="78" id="RNf-aL-jgL"/>
+                            <constraint firstItem="mzh-Ix-8M5" firstAttribute="top" secondItem="mq9-gf-DXb" secondAttribute="bottom" constant="75" id="RRs-5I-pFH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mzh-Ix-8M5" secondAttribute="bottom" constant="160" id="TpZ-x2-4Gq"/>
+                            <constraint firstItem="veY-Q8-Cg9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="124" id="XuC-sP-rkv"/>
+                            <constraint firstAttribute="trailing" secondItem="mzh-Ix-8M5" secondAttribute="trailing" constant="56" id="aNn-O9-9sE"/>
+                            <constraint firstAttribute="trailing" secondItem="mq9-gf-DXb" secondAttribute="trailing" constant="136" id="f0d-pl-WkE"/>
+                            <constraint firstItem="mq9-gf-DXb" firstAttribute="top" secondItem="veY-Q8-Cg9" secondAttribute="bottom" constant="78" id="gqq-ll-fwf"/>
+                            <constraint firstItem="veY-Q8-Cg9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="81" id="lnz-lm-ZBo"/>
+                            <constraint firstAttribute="trailing" secondItem="veY-Q8-Cg9" secondAttribute="trailing" constant="123" id="twv-2d-NBm"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -942,6 +962,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Twitter_logo_blue_48" width="48" height="48"/>
         <image name="like-action" width="54" height="72"/>
         <image name="reply-action_0" width="65" height="72"/>
         <image name="retweet-action" width="75" height="72"/>

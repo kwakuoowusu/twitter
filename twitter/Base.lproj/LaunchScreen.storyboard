@@ -14,14 +14,33 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Twitter_logo_blue_48" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-Ik-Lnk">
+                                <rect key="frame" x="136" y="260" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="KPB-Qg-tSh"/>
+                                    <constraint firstAttribute="width" constant="48" id="LEs-yN-Ux7"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="PqT-Ik-Lnk" secondAttribute="trailing" constant="136" id="3bX-Fx-ec4"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="PqT-Ik-Lnk" secondAttribute="bottom" constant="260" id="7Dc-gy-l15"/>
+                            <constraint firstItem="PqT-Ik-Lnk" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="240" id="o9d-fJ-ToZ"/>
+                            <constraint firstItem="PqT-Ik-Lnk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="136" id="yQl-7j-ugj"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Twitter_logo_blue_48" width="48" height="48"/>
+    </resources>
 </document>
