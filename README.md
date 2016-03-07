@@ -1,4 +1,4 @@
-# Project 4 - twitter
+# Project 4 - twittah
 
 **twitter** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
@@ -59,9 +59,9 @@ The api would tell me some post were liked by my, but they havent actually been,
     See the License for the specific language governing permissions and
     limitations under the License.
 
-# Project 5 - *Name of App Here*
+# Project 5 - *twittah*
 
-Time spent: **X** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -94,8 +94,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Network requests
+2. Sending user tweets through a url
 
 ## Video Walkthrough 
 
